@@ -14,8 +14,12 @@
 
 .login-title{
     text-align: center;
-    font-size: 24px;
+    font-size: 20px;
     border-bottom: 20px;
+    font-family: 'Josefin Sans';
+    color: gray;
+    font-weight: 700;
+    text-transform: uppercase;
 }
 
 .login-box {
@@ -54,4 +58,15 @@
     padding: 10px;
     border: none;
     border-radius: 8px;
+}
+
+.login-register-button{
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    background-color: lightcoral;
+    cursor:pointer;
+    position: absolute;
+    top: 70px;
+    right: 40px;
 }
