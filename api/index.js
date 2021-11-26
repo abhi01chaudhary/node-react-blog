@@ -6,6 +6,7 @@ const dotenv = require('dotenv')
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
 const postRoutes = require('./routes/posts');
+const categoryRoutes = require('./routes/category');
 
 dotenv.config()
 
@@ -20,6 +21,7 @@ app.use(express.json()); //To get request body json parameters
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/posts', postRoutes);
+app.use('/api/categories', categoryRoutes);
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {

@@ -11,6 +11,15 @@ router.post('/', async (req, res) => {
     }
 });
 
+router.get('/:id', async (req, res) => {
+    try {
+        const post = await Post.findById(req.params.id);
+        res.status(200).json(post);
+    } catch (error) {
+        res.status(500).json(error);
+    }
+});
+
 router.put('/:id', async (req, res) => {
     if(req.body.postId === req.params.id){
         const post = await Post.findById(req.params.id)
@@ -31,7 +40,6 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
     if(req.body.postId === req.params.id){
         const post = await Post.findById(req.params.id);
-        console.log(post);
         if(post){
             try{
                 await Post.findByIdAndDelete(req.params.id);

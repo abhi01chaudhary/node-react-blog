@@ -26,7 +26,7 @@ export default function App() {
           <Route path="/settings">
             {user ? <Settings /> : <Home/>}
           </Route>
-          <Route path="/post/:postId">
+          <Route path="/posts/:postId">
             <Single />
           </Route>
           <Route path="/write-post">
