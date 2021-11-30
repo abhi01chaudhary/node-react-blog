@@ -1,10 +1,18 @@
 import React from 'react'
 import "./TopBar.css"
 import { Link } from 'react-router-dom'
+import { useContext } from 'react';
+import { Context } from '../../context/Context';
 
 export default function TopBar() {
     
-    const user = false;
+    const {user, dispatch } = useContext(Context);
+
+
+    const handleLogout = async(event) => {
+        event.preventDefault();
+        dispatch({ type: "LOGOUT" });
+    }
 
     return (
         <div className="top-bar">
@@ -26,8 +34,7 @@ export default function TopBar() {
                         <Link className="link" to="/settings">Settings</Link>
                     </li>
                     <li className="top-list-item">
-                        { user && "LOGOUT" }
-                        {/* { user ? <Link className="link" to="/">Logout</Link> : '' } */}
+                        <Link to="#" onClick={handleLogout} className="link">{ user && "LOGOUT" }</Link>
                     </li>
                 </ul>
             </div>

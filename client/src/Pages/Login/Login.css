@@ -50,14 +50,16 @@
 .form-submit {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: center !important;
     margin-top: 20px;
 }
 
 .login-submit {
+    width: 100px;
     padding: 10px;
     border: none;
     border-radius: 8px;
+    background-color: #f5badc;
 }
 
 .login-register-button{
@@ -76,4 +78,14 @@ a.register-login-button {
     font-weight: 600;
     font-size: 17px;
     color: #fff;
+}
+
+.login-submit :disabled{
+    cursor: not-allowed;
+    background-color: cadetblue;
+}
+
+.error-span p{
+    color:#c31c1c;
+    text-transform: uppercase;
 }

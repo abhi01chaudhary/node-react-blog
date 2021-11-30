@@ -55,6 +55,7 @@
 }
 
 .register-submit {
+    width: 100px;
     padding: 10px;
     border: none;
     border-radius: 8px;
@@ -78,4 +79,9 @@ a.login-register-button {
     font-weight: 600;
     font-size: 17px;
     color: #fff;
+}
+
+.error-span p{
+    color:#c31c1c;
+    text-transform: uppercase;
 }
