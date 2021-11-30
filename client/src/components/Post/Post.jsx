@@ -26,6 +26,7 @@ export default function Post({post}) {
                 <p className="post-description">
                     {post.desc}
                 </p>
+                <p>Author: {post.username}</p>
             </div>
         </div>
     )
