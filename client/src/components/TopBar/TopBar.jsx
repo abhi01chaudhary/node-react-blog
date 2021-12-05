@@ -7,8 +7,6 @@ import { Context } from '../../context/Context';
 export default function TopBar() {
     
     const {user, dispatch } = useContext(Context);
-
-
     const handleLogout = async(event) => {
         event.preventDefault();
         dispatch({ type: "LOGOUT" });
@@ -44,7 +42,9 @@ export default function TopBar() {
                         (
                         <ul className="top-list">
                             <li className="top-list-item">
-                                <img className="top-bar-image" src="https://images.pexels.com/photos/1858175/pexels-photo-1858175.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500" alt="pexels-pic" />
+                                <Link to="/settings">
+                                    {user.profilePic ? (<img className="top-bar-image" src={user.profilePic} alt="pexels-pic" />) : (<p>{user.username}</p>)}
+                                </Link>
                             </li>
                         </ul>
                         )

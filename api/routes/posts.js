@@ -21,11 +21,11 @@ router.get('/:id', async (req, res) => {
 });
 
 router.put('/:id', async (req, res) => {
-    if(req.body.postId === req.params.id){
-        const post = await Post.findById(req.params.id)
-        if(!post){
-            res.status(404).json('Post not found!');
-        }
+    const post = await Post.findById(req.params.id)
+    if(!post){
+        res.status(404).json('Post not found!');
+    }
+    if(post.username === req.params.username){
         try {
             const updatedPost = await Post.findByIdAndUpdate(req.params.id, {
                 $set: req.body
@@ -38,8 +38,8 @@ router.put('/:id', async (req, res) => {
 });
 
 router.delete('/:id', async (req, res) => {
-    if(req.body.postId === req.params.id){
-        const post = await Post.findById(req.params.id);
+    const post = await Post.findById(req.params.id);
+    if(post.username === req.body.username){
         if(post){
             try{
                 await Post.findByIdAndDelete(req.params.id);

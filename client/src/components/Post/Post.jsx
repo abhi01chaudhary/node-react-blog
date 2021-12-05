@@ -3,13 +3,12 @@ import './Post.css'
 import { Link } from 'react-router-dom'
 
 export default function Post({post}) {
+    const PF = 'http://localhost:5000/images/'
     return (
         <div className="post">
-            {post.photo ? (
-                <img className="post-image" src="{post.photo}" alt="pexel-img" />
-            ): (
-                <img className="post-image" src="https://images.pexels.com/photos/574073/pexels-photo-574073.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="pexel-img" />
-            ) }
+            {post.photo && (
+                <img className="post-image" src={PF + post.photo} alt="pexel-img" />
+            )}
             <div className="post-info">
                 <div className="post-category">
                     {post.categories.map((category, index) => (

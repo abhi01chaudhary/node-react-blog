@@ -1,41 +1,95 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useLocation } from "react-router";
 import './SinglePost.css'
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { Context } from '../../context/Context';
 
 export default function SinglePost() {
     const location = useLocation()
     const path = location.pathname.split('/')[2]
     const [post, setPost] = useState({})
+    const {user} = useContext(Context)
+    const [title, setTitle] = useState('')
+    const [desc, setDesc] = useState('')
+    const [updateMode, setUpdateMode] = useState(false)
 
     useEffect(() => {
         const getPost = async () => {
-          const res = await axios.get("/posts/" + path);
-          setPost(res.data);
+            const res = await axios.get("/posts/" + path);
+            setPost(res.data);
+            setTitle(res.data.title);
+            setDesc(res.data.desc);
         };
         getPost();
-      }, [path]);
+    }, [path, title, desc]);
+    
+    const PF = 'http://localhost:5000/images/'
 
+    const handleDelete = async(e) => {
+        e.preventDefault();
+        try {
+            const res = await axios.delete(`/posts/${post._id}`, {
+                data: {
+                    username: user.username
+                }
+            })
+            window.location.replace('/');
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const handleUpdate = async(e) => {
+        e.preventDefault();
+        try{
+            console.log(title, desc);
+            const res = await axios.put(`/posts/${post._id}`, {
+                data: {
+                    username: user.username,
+                    title: title,
+                    desc: desc
+                }
+            })
+            window.location.replace('/posts'+ post._id)
+            console.log(res);
+        }catch(err){
+
+        }
+    }
+    
     return (
         
         <div className="single-post">
             <div className="single-post-wrapper">
                 {post.photo && (
                     <img 
-                        src="https://images.pexels.com/photos/6685428/pexels-photo-6685428.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500" 
+                        src={PF + post.photo} 
                         alt="single-post"
                         className="single-post-image"
                     />
                 )}
-                <h1 className="single-post-title">
+                
+                {updateMode ? (
+                    <input
+                        type="text"
+                        value={title}
+                        className="single-post-update-title single-post-title"
+                        autoFocus
+                        onChange={(e) => setTitle(e.target.value)}
+                   />
+                ): (
+                    <h1 className="single-post-title">
                     {post.title}
-                    <div className="single-post-actions">
-                        <i className="single-post-icon far fa-edit"></i>
-                        <i className="single-post-icon far fa-trash-alt"></i>
-                    </div>
-                </h1>
+                    { post.username === user?.username && (
+                        <div className="single-post-actions">
+                            <i className="single-post-icon far fa-edit" onClick={(e) => setUpdateMode(true)}></i>
+                            <i className="single-post-icon far fa-trash-alt" onClick={(e) => handleDelete}></i>
+                        </div>
+                    ) }
+                    </h1>
+                )}
                 
                 <div className="single-post-info">
                     <span className="single-post-author">
@@ -48,11 +102,24 @@ export default function SinglePost() {
                         {new Date(post.createdAt).toDateString()}
                     </span>
                 </div>
-                <div className="single-post-description">
-                    <p>
+                
+                {updateMode ? (
+                    <textarea
+                        value={desc}
+                        className="writeInput writeText"
+                        placeholder="Tell your story..."
+                        type="text"
+                        onChange={(e) => setDesc(e.target.value)}
+                    />
+                ): (
+                    <p className="single-post-desc">
                         {post.desc}
                     </p>
-                </div>
+                )}
+
+                {updateMode && (
+                    <button className="single-post-button" onClick={handleUpdate}>Update</button>
+                )}
             </div>
         </div>
     )

@@ -5,6 +5,8 @@
 .single-post-wrapper{
     padding: 20px;
     margin: 20px;
+    display: flex;
+    flex-direction: column;
 }
 
 img.single-post-image {
@@ -65,4 +67,33 @@ img.single-post-image {
     font-size: 24px;
     font-weight: 900;
     margin-left: 40px;
+}
+
+.single-post-update-title {
+    font-family: "Lora", serif;
+    margin: 10px;
+    font-size: 24px !important;
+    border: none;
+    color: #666;
+    line-height: 50px;
+}
+
+.single-post-update-title:focus{
+    outline: none;
+}
+
+.single-post-desc{
+    outline: none;
+}
+
+button.single-post-button {
+    width: 100px;
+    border: none;
+    background-color: teal;
+    padding: 5px;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    align-self: flex-end;
+    margin-top: 20px;
 }

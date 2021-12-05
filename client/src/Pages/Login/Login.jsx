@@ -11,7 +11,7 @@ export default function Login() {
     
     const passwordRef = useRef();
     
-    const { user, dispatch, isFetching, error } = useContext(Context);
+    const { dispatch, isFetching, error } = useContext(Context);
     
     const handleSubmit = async (event) => {
         
