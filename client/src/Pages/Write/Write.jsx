@@ -31,8 +31,7 @@ export default function Write() {
             data.append('file', file)
             post.photo = filename
             try {
-                const res = await axios.post('/upload', data)
-                console.log(res);
+               await axios.post('/upload', data)
             } catch (error) {
                 console.log(error);
             }
@@ -52,7 +51,7 @@ export default function Write() {
                 <img
                     className="write-img"
                     src={URL.createObjectURL(file)}
-                    alt=""
+                    alt="post-img"
                 />
             )}
             <form className="write-form" onSubmit={handleSubmit}>

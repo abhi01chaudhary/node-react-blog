@@ -23,14 +23,14 @@ export default function SinglePost() {
             setDesc(res.data.desc);
         };
         getPost();
-    }, [path, title, desc]);
+    }, [path]);
     
     const PF = 'http://localhost:5000/images/'
 
     const handleDelete = async(e) => {
         e.preventDefault();
         try {
-            const res = await axios.delete(`/posts/${post._id}`, {
+            await axios.delete(`/posts/${post._id}`, {
                 data: {
                     username: user.username
                 }
@@ -44,18 +44,17 @@ export default function SinglePost() {
     const handleUpdate = async(e) => {
         e.preventDefault();
         try{
-            console.log(title, desc);
             const res = await axios.put(`/posts/${post._id}`, {
-                data: {
-                    username: user.username,
-                    title: title,
-                    desc: desc
-                }
+                username: user.username,
+                title: title,
+                desc: desc
             })
-            window.location.replace('/posts'+ post._id)
-            console.log(res);
+            console.log(res)
+            setUpdateMode(false)
+            // window.location.replace('/posts'+ post._id)
+            
         }catch(err){
-
+            console.log(err)
         }
     }
     
@@ -81,7 +80,7 @@ export default function SinglePost() {
                    />
                 ): (
                     <h1 className="single-post-title">
-                    {post.title}
+                    {title}
                     { post.username === user?.username && (
                         <div className="single-post-actions">
                             <i className="single-post-icon far fa-edit" onClick={(e) => setUpdateMode(true)}></i>
@@ -106,14 +105,14 @@ export default function SinglePost() {
                 {updateMode ? (
                     <textarea
                         value={desc}
-                        className="writeInput writeText"
+                        className="single-post-description"
                         placeholder="Tell your story..."
                         type="text"
                         onChange={(e) => setDesc(e.target.value)}
                     />
                 ): (
                     <p className="single-post-desc">
-                        {post.desc}
+                        {desc}
                     </p>
                 )}
 

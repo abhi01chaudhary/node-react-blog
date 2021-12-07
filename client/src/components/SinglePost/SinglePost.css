@@ -97,3 +97,11 @@ button.single-post-button {
     align-self: flex-end;
     margin-top: 20px;
 }
+
+.single-post-description{
+    border: none;
+    color: #666;
+    line-height: 50px;
+    font-family: 'Lora', serif;
+    outline: none;
+}
