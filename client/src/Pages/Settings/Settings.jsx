@@ -12,6 +12,8 @@ export default function Settings() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const {user} = useContext(Context);
+    const [updateMode, setUpdateMode] = useState(false)
+    const [success, setSuccess] = useState(false)
 
     const PF = 'http://localhost:5000/images/'
 
@@ -52,9 +54,12 @@ export default function Settings() {
                 password,
                 profilePic: newUser.profilePic ? newUser.profilePic : user.profilePic
             });
-            window.location.replace('/settings')
             localStorage.setItem('user', null);
             localStorage.setItem('user', JSON.stringify(res.data))
+            if(res.status === 200){
+                setSuccess(true)
+            }
+            window.location.replace('/settings')
         }catch(err){
             console.log(err);
         }
@@ -64,24 +69,13 @@ export default function Settings() {
         <div className="settings">
             <div className="settings-wrapper">
                 <div className="settingsTitle">
-                    <span className="settingsTitleUpdate">Update Your Account</span>
+                    <span className="settingsTitleUpdate" onClick={() => setUpdateMode(true) }>Update Your Account</span>
                     <span className="settingsTitleDelete">Delete Account</span>
                 </div>
                 <form className="settings-form" onSubmit={handleSubmit}>
                     <h2>Profile Picture</h2>
                     <div className="settings-profile">
-                        {user.profilePic ? (
-                            <img 
-                                src={PF + user.profilePic} 
-                                alt="profile-img" 
-                            />
-                        ) : null}
-                        {
-                            file && 
-                            (
-                                <img src={URL.createObjectURL(file)} alt="" />
-                            )
-                        }
+                        <img src={file ? URL.createObjectURL(file) : PF + user.profilePic} alt="" />
                         <label htmlFor="settings-file-input">
                             <i className="settings-user-profile far fa-user-circle"></i>
                             <span>Select Image</span>
@@ -94,8 +88,10 @@ export default function Settings() {
                     <input type="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} value={email} />
                     <label htmlFor="username">Password</label>
                     <input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)}/>
-
-                    <button type="submit" className="settings-submit">Submit</button>
+                    <button type="submit" className="settings-submit">Update</button>
+                    {success && (
+                        <span style={{color: 'orange', marginTop: "20px", textAlign: "center"}}>Profile has been updated!</span>
+                    )}
                 </form>
             </div>
             <Sidebar />
